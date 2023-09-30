@@ -1,9 +1,7 @@
 package chess;
 
 import boardgame.Board;
-import boardgame.Position;
 import chess.pieces.King;
-import chess.pieces.Rook;
 
 public class ChessMatch {
 
@@ -32,17 +30,24 @@ public class ChessMatch {
 		return mat;
 	}
 
+	private void placeNewPiece(char column, int row, ChessPiece piece) { // esse metodo já joga as coordenadas no
+																			// sistema do xadrez
+		board.PlacePiece(piece, new ChessPosition(column, row).toPosition(row, column)); // aqui chamamos o método
+																							// PlacePiece e damos como
+																							// argumento a piece,
+																							// declarando uma
+																							// chessPosition e aplicando
+																							// o método toPosition para
+																							// jogar às coordenadas da
+																							// matriz
+
+	}
+
 	private void initialSetup() {
-		board.PlacePiece(new Rook(board, Color.WHITE), new Position(2, 1)); // esse metodo é responsavel pelo inicio da
-																			// partida. Assim chamamos o metodo
-																			// PlacePiece lá da classe board. No lugar
-																			// da peça, podemos instanciar um novo tipo
-																			// de peça: Rook, King... depois, declaramos
-																			// seus parametros, que é o board e sua cor.
-																			// Após isso, podemos instanciar um novo
-																			// tipo Position.
-		board.PlacePiece(new King(board, Color.BLACK), new Position(5, 3));
-		board.PlacePiece(new Rook(board, Color.BLACK), new Position(7, 5));
+
+		placeNewPiece('e', 1, new King(board, Color.BLACK));
+		placeNewPiece('d', 8, new King(board, Color.BLACK));
+
 	}
 
 }
