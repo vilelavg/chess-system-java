@@ -33,6 +33,12 @@ public class ChessMatch {
 		return mat;
 	}
 	
+	public boolean[][] possibleMoves(ChessPosition sourcePosition) {
+		Position position = sourcePosition.toPosition();
+		validateSourcePosition(position);
+		return board.piece(position).possibleMoves();
+	}
+	
 	public ChessPiece performChessMove (ChessPosition sourcePosition, ChessPosition targetPosition) {
 		Position source = sourcePosition.toPosition(); // como iremos inserir a posição no formato de xadrez, temos que converter pra matriz, realizando o método toPosition() sobre o sourcePosition inserido 
 		Position target = targetPosition.toPosition(); // como iremos inserir a posição no formato de xadrez, temos que converter pra matriz, realizando o método toPosition() sobre o targetPosition inserido
