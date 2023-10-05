@@ -1,6 +1,8 @@
 package chess;
 
 import boardgame.Board;
+import boardgame.Piece;
+import boardgame.Position;
 import chess.pieces.King;
 import chess.pieces.Rook;
 
@@ -30,10 +32,32 @@ public class ChessMatch {
 		}
 		return mat;
 	}
+	
+	public ChessPiece performChessMove (ChessPosition sourcePosition, ChessPosition targetPosition) {
+		Position source = sourcePosition.toPosition(); // como iremos inserir a posição no formato de xadrez, temos que converter pra matriz, realizando o método toPosition() sobre o sourcePosition inserido 
+		Position target = targetPosition.toPosition(); // como iremos inserir a posição no formato de xadrez, temos que converter pra matriz, realizando o método toPosition() sobre o targetPosition inserido
+		validateSourcePosition(source); // nesse método validamos a posição de origem. Se n existir, lançamos uma exceção
+		Piece capturedPiece = makeMove(source,target); 
+		return (ChessPiece) capturedPiece; // downcasting para ChessPiece, já que a mesma era do tipo Piece, apenas uma posição ocupada no tabuleiro
+		
+	}
+	
+	private Piece makeMove(Position source, Position target) {
+		Piece p = board.removePiece(source); // a peça a ser removida é p. Com isso, criamos a variavel do tipo Piece e ela recebe o resultado do método removePiece tendo a posição de origem source como argumento
+		Piece capturedPiece = board.removePiece(target); // a peça capturada será a da posição de destino. Deixando assim, a posição vaga
+		board.PlacePiece(p, target);
+		return capturedPiece;
+	}
+	
+	private void validateSourcePosition (Position position) {
+		if (!board.theresAPiece(position)) {
+			throw new ChessException("Não existe peça na posição");
+		}
+	}
 
 	private void placeNewPiece(char column, int row, ChessPiece piece) { // esse metodo já joga as coordenadas no
 																			// sistema do xadrez
-		board.PlacePiece(piece, new ChessPosition(column, row).toPosition(row, column)); // aqui chamamos o método
+		board.PlacePiece(piece, new ChessPosition(column, row).toPosition()); // aqui chamamos o método
 																							// PlacePiece e damos como
 																							// argumento a piece,
 																							// declarando uma

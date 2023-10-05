@@ -24,10 +24,8 @@ public class ChessPosition {
 		return row;
 	}
 
-	protected Position toPosition(int row, char column) {
-		return new Position(8 - row, column - 'a'); // na matriz, as linhas são contadas do zero em diante. E onde seria
-													// o zero, no nosso tabuleiro é 8. Assim, 8 = 0, 7 = 1, e assim por
-													// diante.
+	protected Position toPosition() {
+		return new Position(8 - row, column - 'a');
 	}
 
 	protected static ChessPosition fromPosition(Position position) {
