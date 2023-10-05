@@ -37,6 +37,7 @@ public class ChessMatch {
 		Position source = sourcePosition.toPosition(); // como iremos inserir a posição no formato de xadrez, temos que converter pra matriz, realizando o método toPosition() sobre o sourcePosition inserido 
 		Position target = targetPosition.toPosition(); // como iremos inserir a posição no formato de xadrez, temos que converter pra matriz, realizando o método toPosition() sobre o targetPosition inserido
 		validateSourcePosition(source); // nesse método validamos a posição de origem. Se n existir, lançamos uma exceção
+		validateTargetPosition(source, target);
 		Piece capturedPiece = makeMove(source,target); 
 		return (ChessPiece) capturedPiece; // downcasting para ChessPiece, já que a mesma era do tipo Piece, apenas uma posição ocupada no tabuleiro
 		
@@ -52,6 +53,15 @@ public class ChessMatch {
 	private void validateSourcePosition (Position position) {
 		if (!board.theresAPiece(position)) {
 			throw new ChessException("Não existe peça na posição");
+		} 
+		if (!board.piece(position).isThereAnyPossibleMove()) {
+			throw new ChessException("Não há movimentos para a peça");
+		}
+	}
+	
+	private void validateTargetPosition (Position source, Position target) {
+		if (!board.piece(source).possibleMove(target)) {
+			throw new ChessException("ERRO!");
 		}
 	}
 
@@ -70,19 +80,19 @@ public class ChessMatch {
 
 	private void initialSetup() {
 
-		placeNewPiece('e', 1, new King(board, Color.WHITE));
-		placeNewPiece('a', 1, new Rook(board, Color.WHITE));
-		placeNewPiece('b', 1, new Rook(board, Color.WHITE));
+		placeNewPiece('d', 1, new King(board, Color.WHITE));
 		placeNewPiece('c', 1, new Rook(board, Color.WHITE));
-		placeNewPiece('d', 1, new Rook(board, Color.WHITE));
-		placeNewPiece('f', 1, new Rook(board, Color.WHITE));
+		placeNewPiece('e', 2, new Rook(board, Color.WHITE));
+		placeNewPiece('c', 2, new Rook(board, Color.WHITE));
+		placeNewPiece('e', 1, new Rook(board, Color.WHITE));
+		placeNewPiece('d', 2, new Rook(board, Color.WHITE));
 
-		placeNewPiece('e', 8, new King(board, Color.BLACK));
-		placeNewPiece('a', 8, new Rook(board, Color.BLACK));
-		placeNewPiece('b', 8, new Rook(board, Color.BLACK));
+		placeNewPiece('d', 8, new King(board, Color.BLACK));
 		placeNewPiece('c', 8, new Rook(board, Color.BLACK));
-		placeNewPiece('d', 8, new Rook(board, Color.BLACK));
-		placeNewPiece('f', 8, new Rook(board, Color.BLACK));
+		placeNewPiece('e', 7, new Rook(board, Color.BLACK));
+		placeNewPiece('c', 7, new Rook(board, Color.BLACK));
+		placeNewPiece('e', 8, new Rook(board, Color.BLACK));
+		placeNewPiece('d', 7, new Rook(board, Color.BLACK));
 
 	}
 
