@@ -1,5 +1,8 @@
 package chess;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import boardgame.Board;
 import boardgame.Piece;
 import boardgame.Position;
@@ -11,7 +14,11 @@ public class ChessMatch {
 	private int turn;
 	private Color currentPlayer;
 	private Board board;
-
+	
+	List<Piece> piecesOnTheBoard = new ArrayList<>(); // essa lista será responsável por guardar a informação das peças ainda presentes no tabuleiro
+	List<Piece> capturedPieces = new ArrayList<>(); // mostrará as peças capturadas 
+	// as peças capturadas saem da lista piecesOnTheBoard e vai para a capturedPieces	
+	
 	public ChessMatch() {
 		board = new Board(8, 8);
 		turn = 1;
@@ -69,12 +76,15 @@ public class ChessMatch {
 	}
 
 	private Piece makeMove(Position source, Position target) {
-		Piece p = board.removePiece(source); // a peça a ser removida é p. Com isso, criamos a variavel do tipo Piece e
-												// ela recebe o resultado do método removePiece tendo a posição de
-												// origem source como argumento
-		Piece capturedPiece = board.removePiece(target); // a peça capturada será a da posição de destino. Deixando
-															// assim, a posição vaga
+		Piece p = board.removePiece(source); 
+		Piece capturedPiece = board.removePiece(target); 
 		board.PlacePiece(p, target);
+		
+		if (capturedPiece != null) {
+			piecesOnTheBoard.remove(capturedPiece);
+			capturedPieces.add(capturedPiece);
+		}
+		
 		return capturedPiece;
 	}
 
@@ -104,7 +114,7 @@ public class ChessMatch {
 	private void placeNewPiece(char column, int row, ChessPiece piece) { // esse metodo já joga as coordenadas no
 																			// sistema do xadrez
 		board.PlacePiece(piece, new ChessPosition(column, row).toPosition()); // aqui chamamos o método
-																				// PlacePiece e damos como
+		piecesOnTheBoard.add(piece);																		// PlacePiece e damos como
 																				// argumento a piece,
 																				// declarando uma
 																				// chessPosition e aplicando
