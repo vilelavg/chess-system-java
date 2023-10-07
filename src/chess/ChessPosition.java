@@ -29,7 +29,7 @@ public class ChessPosition {
 	}
 
 	protected static ChessPosition fromPosition(Position position) {
-		return new ChessPosition((char) ('a' - position.getColumn()), 8 - position.getRow()); // aqui apenas retorna a
+		return new ChessPosition((char) ('a' + position.getColumn()), 8 - position.getRow()); // aqui apenas retorna a
 																								// posiçao de acordo com
 																								// o tabuleiro de
 																								// xadrez, onde vem a
