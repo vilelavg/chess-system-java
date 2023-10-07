@@ -17,7 +17,7 @@ public class Program {
 		ChessMatch chessMatch = new ChessMatch();
 		List <ChessPiece> captured = new ArrayList<>();
 
-		while (true) { // o true faz com que repita sempre 
+		while (!chessMatch.getCheckMate()) { // o true faz com que repita sempre 
 			
 			try {
 				UI.clearScreen();
@@ -47,6 +47,8 @@ public class Program {
 				System.out.println("ERRO! " + e.getMessage());
 			}
 		}
+		UI.clearScreen();
+		UI.printMatch(chessMatch, captured);
 
 	}
 
